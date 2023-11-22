@@ -102,7 +102,38 @@
 
         </form>
 
-        <div class="" *ngIf="tipoTela == 2 && this.itemEdicao && this.itemEdicao.Id > 0 && tableListUsuariosistema">
+       
+        <div class="container-list-user" *ngIf="tipoTela == 2 && this.itemEdicao && this.itemEdicao.Id > 0 && tableListUsuariosistema">
+           
+            <div class="content-page">
+                <div class="card-header">
+                    <div class="header-info-2">
+                        <div class="card-header">
+                            <div class="card-title"> Lista de usuários do Sistema</div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="form-page">
+                <div class="row">
+                    <div class="group-row">
+                        <label>Informe o E-mail para add usuário no sistema</label>
+                        <input type="text" name="email" id="email"  [(ngModel)]="emailUsuarioSistema" placeholder="E-mail"  />
+                        <label class="error-input" *ngIf="!emailUsuarioSistemaValid">
+                    {{textValid}}
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="row">
+    
+                    <div class="group-row">
+                        <input type="submit" value="Add" class="btn-primary" (click)="addUsuarioSistema()" />
+                    </div>
+                    
+                </div>
+            </div>
+           
             <table cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
@@ -145,7 +176,7 @@
         </div>
 
     </div>
-
+</div>
  
 
 </div>

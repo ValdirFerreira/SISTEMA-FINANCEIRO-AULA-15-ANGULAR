@@ -15,9 +15,10 @@ export class UsuarioSistemaFinanceiro {
 
     private readonly baseURL = environment["endPoint"];
 
-    CadastrarUsuarioNoSistema(sistemaFinanceiro: SistemaFinanceiro) {
-        return this.httpClient.post<SistemaFinanceiro>(`${this.baseURL}/CadastrarUsuarioNoSistema`,
-            sistemaFinanceiro)
+    CadastrarUsuarioNoSistema(idSistema:number,emailUsuario:string) {
+        var model =  {idSistema:idSistema,emailUsuario:emailUsuario}
+        return this.httpClient.post<SistemaFinanceiro>(`${this.baseURL}/CadastrarUsuarioNoSistema?idSistema${idSistema}&emailUsuario=${emailUsuario}`,
+            null)
     }
 
     ListarUsuariosSistema(idSistema: number) {

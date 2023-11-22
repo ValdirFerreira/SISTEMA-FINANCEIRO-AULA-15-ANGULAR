@@ -28,7 +28,7 @@ export class SistemaComponent {
   config2: any;
   paginacao2: boolean = true;
   itemsPorPagina2: number = 10
-  
+
 
   configpag() {
     this.id = this.gerarIdParaConfigDePaginacao();
@@ -40,7 +40,7 @@ export class SistemaComponent {
 
     };
 
-    this.id2= this.gerarIdParaConfigDePaginacao();
+    this.id2 = this.gerarIdParaConfigDePaginacao();
 
     this.config2 = {
       id: this.id2,
@@ -82,7 +82,7 @@ export class SistemaComponent {
   mudarItemsPorPage2() {
     this.page2 = 1
     this.config2.currentPage = this.page2;
-    this.config2.itemsPerPage= this.itemsPorPagina2;
+    this.config2.itemsPerPage = this.itemsPorPagina2;
   }
 
   mudarPage2(event: any) {
@@ -109,7 +109,7 @@ export class SistemaComponent {
     this.usuarioSistemaFinanceiro.ListarUsuariosSistema(this.itemEdicao.Id)
       .subscribe((response: Array<any>) => {
 
-        this.tableListUsuariosistema= response;
+        this.tableListUsuariosistema = response;
       }, (error) => console.error(error),
         () => { })
 
@@ -165,18 +165,18 @@ export class SistemaComponent {
       this.itemEdicao.MesCopia = dados["mesCopia"].value;
       this.itemEdicao.AnoCopia = dados["anoCopia"].value;
 
-      this.itemEdicao.NomePropriedade="";
-      this.itemEdicao.mensagem="";
-      this.itemEdicao.notificacoes=[];
+      this.itemEdicao.NomePropriedade = "";
+      this.itemEdicao.mensagem = "";
+      this.itemEdicao.notificacoes = [];
 
       this.sistemaService.AtualizarSistemaFinanceiro(this.itemEdicao)
-      .subscribe((response: SistemaFinanceiro) => {
+        .subscribe((response: SistemaFinanceiro) => {
 
-        this.sistemaForm.reset();
-        this.ListaSistemasUsuario();
+          this.sistemaForm.reset();
+          this.ListaSistemasUsuario();
 
-      }, (error) => console.error(error),
-        () => { })
+        }, (error) => console.error(error),
+          () => { })
 
 
     }
@@ -226,15 +226,15 @@ export class SistemaComponent {
 
           var dados = this.dadorForm();
           dados["name"].setValue(this.itemEdicao.Nome)
-        
-           dados["mes"].setValue(this.itemEdicao.Mes);
-            dados["ano"].setValue(this.itemEdicao.Ano);
-           dados["diaFechamento"].setValue(this.itemEdicao.DiaFechamento);
-           this.checked =this.itemEdicao.GerarCopiaDespesa;
-          dados["mesCopia"].setValue(this.itemEdicao.MesCopia);
-           dados["anoCopia"].setValue(this.itemEdicao.AnoCopia);
 
-           this.ListarUsuariosSistema();
+          dados["mes"].setValue(this.itemEdicao.Mes);
+          dados["ano"].setValue(this.itemEdicao.Ano);
+          dados["diaFechamento"].setValue(this.itemEdicao.DiaFechamento);
+          this.checked = this.itemEdicao.GerarCopiaDespesa;
+          dados["mesCopia"].setValue(this.itemEdicao.MesCopia);
+          dados["anoCopia"].setValue(this.itemEdicao.AnoCopia);
+
+          this.ListarUsuariosSistema();
 
         }
 
@@ -250,7 +250,8 @@ export class SistemaComponent {
       .subscribe((reponse: SistemaFinanceiro) => {
 
         if (reponse) {
-         alert("Ok")
+          this.edicao(this.itemEdicao.Id)
+          this.emailUsuarioSistema = "";
         }
 
       },
@@ -262,6 +263,32 @@ export class SistemaComponent {
 
   handleChangePago(item: any) {
     this.checked = item.checked as boolean;
+  }
+
+
+  emailUsuarioSistema: string = "";
+  emailUsuarioSistemaValid: boolean = true;
+  textValid: string = "Campo Obrigatório!";
+
+  addUsuarioSistema() {
+    this.emailUsuarioSistemaValid = true;
+
+    if (!this.emailUsuarioSistema) {
+      this.emailUsuarioSistemaValid = false;
+    }
+    else {
+
+      this.sistemaService.CadastrarUsuarioNoSistema(this.itemEdicao.Id, this.emailUsuarioSistema)
+        .subscribe((response: any) => {
+
+          if (response) {
+            this.edicao(this.itemEdicao.Id)
+            this.emailUsuarioSistema = "";
+          }
+
+        }, (error) => console.error(error),
+          () => { })
+    }
   }
 
 }
